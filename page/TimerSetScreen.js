@@ -77,14 +77,21 @@ class TimerSetScreen {
 
 				const edit = () => {
 					let val = this[key] + dir;
-					val = Math.min(Math.max(0, val), 59);
+
+					if (val < 0) val = 59;
+					else if (val > 59) val = 0;
 
 					this[key] = val;
 					this.refresh();
 				};
 
+				const reset = () => {
+					this[key] = 0;
+					this.refresh();
+				}
+
 				events.ontouch = edit;
-				events.onlongtouchrepeatly = edit;
+				events.onlongtouch = reset;
 
 				this.editButtons.push(widget);
 			})
